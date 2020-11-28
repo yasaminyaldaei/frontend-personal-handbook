@@ -1,6 +1,8 @@
 ## Table Of Contents:
 - [How is responsive design different from adaptive design?](#How-is-responsive-design-different-from-adaptive-design?)
 - [Have you ever worked with retina graphics? If so, when and what techniques did you use?](#have-you-ever-worked-with-retina-graphics-if-so-when-and-what-techniques-did-you-use)
+- [Is there any reason you'd want to use translate() instead of absolute positioning, or vice-versa? And why?
+](#Is-there-any-reason-you'd-want-to-use-translate()-instead-of-absolute-positioning,-or-vice-versa?-And-why?)
 
 
 ### How is responsive design different from adaptive design?
@@ -38,6 +40,20 @@
             - Polyfill can be used for further support
 - For icons, SVGs and icon fonts can be used for perfect result regardless of resolution
 
+### Is there any reason you'd want to use `translate()` instead of `absolute` positioning, or vice-versa? And why?
+
+- `translate()` is a value of CSS transform
+    - Changing it doesn't trigger browser reflow or repaint
+    - It does trigger compositions
+        - As well as `opacity`
+    - transform causes the browser to create a GPU layer for the element
+    - When using `translate()` the element still occupies its original space
+        - Like `relative`result 
+- Changing `absolute` positioning triggers reflow
+    - It also uses the CPU
+
+- **`translate()` is more efficient and will 
+in shorter paint times for smoother animations**
 
 
 
