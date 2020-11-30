@@ -20,6 +20,36 @@ const EnhancedComponent = higherOrderComponent(WrappedComponent);
     - The HOC isn't concerned with why and how the data is used, and the wrapped component isn't concerned with where the data came from
 - Like the components, the contract between the HOC function and the wrapped component is entirely **prop-based** 
     - This makes it easy to swap one HOC for a different one as long as they provide the same props
+
+## Don't Mutate the Original Component
+
+```
+function logProps(InputComponent) {
+  InputComponent.prototype.componentDidUpdate = function(prevProps) {
+    console.log('Current props: ', this.props);
+    console.log('Previous props: ', prevProps);
+  };
+  // The fact that we're returning the original input is a hint that it has
+  // been mutated.
+  return InputComponent;
+}
+
+// EnhancedComponent will log whenever props are received
+const EnhancedComponent = logProps(InputComponent);
+```
+- The problems of above code:
+    - The input component cannot be resued separately from the enhanced component
+    - If we apply another HOC to `EnhancedComponent`, that *also* mutates the `componentDidUpdate`
+        - Meaning the first HOC's functionality will be overridden
+    - The HOC also won't work with function components
+        - Becauce of the lack of lifecycle methods
+- **Mutating HOCs are a leaky abstraction**
+    - The consumer must know how they areimplemented in order to avoid conflicts 
+- We should use **composition** in HOC
+    - Avoiding the potential for clashes
+    - Works equally well with class and function component
+    - It's a pure function
+        - Composable with other HOCs and with itself
     
 
 
