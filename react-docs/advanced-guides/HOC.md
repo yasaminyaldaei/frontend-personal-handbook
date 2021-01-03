@@ -37,19 +37,46 @@ function logProps(InputComponent) {
 // EnhancedComponent will log whenever props are received
 const EnhancedComponent = logProps(InputComponent);
 ```
-- The problems of above code:
+- The problems of the above code:
     - The input component cannot be resued separately from the enhanced component
     - If we apply another HOC to `EnhancedComponent`, that *also* mutates the `componentDidUpdate`
         - Meaning the first HOC's functionality will be overridden
     - The HOC also won't work with function components
-        - Becauce of the lack of lifecycle methods
+        - Because of the lack of lifecycle methods
 - **Mutating HOCs are a leaky abstraction**
-    - The consumer must know how they areimplemented in order to avoid conflicts 
+    - The consumer must know how they are implemented in order to avoid conflicts 
 - We should use **composition** in HOC
     - Avoiding the potential for clashes
     - Works equally well with class and function component
     - It's a pure function
         - Composable with other HOCs and with itself
+
+## Convention: Pass unrelated props through to the wrapped component
+
+- HOCs **add** features, they shouldn't alter the flow too much
+    - It's expected that the input component has a **similar interface** to the wrapped component.
+
+```
+render() {
+  // Filter out extra props that are specific to this HOC and shouldn't be
+  // passed through
+  const { extraProp, ...passThroughProps } = this.props;
+
+  // Inject props into the wrapped component. These are usually state values or
+  // instance methods.
+  const injectedProp = someStateOrInstanceMethod;
+
+  // Pass props to wrapped component
+  return (
+    <WrappedComponent
+      injectedProp={injectedProp}
+      {...passThroughProps}
+    />
+  );
+}
+```
+
+
     
 
 
