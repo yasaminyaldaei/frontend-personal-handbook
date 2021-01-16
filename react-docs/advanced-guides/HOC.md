@@ -76,7 +76,34 @@ render() {
 }
 ```
 
+## Convention: Composing single-argument HOCs
 
-    
+- Some HOCs accept only a single argument, **the wrapped component**
+- The most common signature for HOC's looks like this:
+
+  - `connect` is a higher-order function that returns another function
+  - The returned function is a HOC, which returns a component that is connected to the Redux store
+```
+// React Redux's `connect`
+const ConnectedComment = connect(commentSelector, commentActions)(CommentList);
+```
+- The benefit of this convention is the easier composition
+  - Single-argument HOCs like the one returned by the `connect` have the signature `Component => Component`
+  - Functions whose output type is the same as its input type are really easy to compose together
+  - **This same property also allows enhancer-style HOCs to be used as decorators**
+
+```
+// Instead of doing this...
+const EnhancedComponent = withRouter(connect(commentSelector)(WrappedComponent))
+
+// ... you can use a function composition utility
+// compose(f, g, h) is the same as (...args) => f(g(h(...args)))
+const enhance = compose(
+  // These are both single-argument HOCs
+  withRouter,
+  connect(commentSelector)
+)
+const EnhancedComponent = enhance(WrappedComponent)
+``` 
 
 
