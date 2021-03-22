@@ -148,3 +148,25 @@ render() {
   return <EnhancedComponent />;
 }
 ```
+
+### Static methods must be copied over
+
+- By wrapping a component with a container component, the static methods of it are lost.
+- Solutions:
+  - Copy the methods onto the container:
+```
+  function enhance(WrappedComponent) {
+  class Enhance extends React.Component {/*...*/}
+  // Must know exactly which method(s) to copy :(
+  Enhance.staticMethod = WrappedComponent.staticMethod;
+  return Enhance;
+}
+```
+- To automate this use `hoistNonReactStatic`
+- Another solution is to export the static method separately
+
+### Refs aren't passed through
+
+- If we add a ref to an element whose component is the result of a HOC, the ref refers to an instance of the outermost container component
+
+- To solve this, `forwardRef` should be used
