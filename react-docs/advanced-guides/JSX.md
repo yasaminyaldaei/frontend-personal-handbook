@@ -47,3 +47,37 @@ return <MyComponents.DatePicker color="blue" />;
   return <SpecificStory story={props.story} />;
 }
 ```
+
+## Props in JSX
+
+### Javascript expressions as Props
+
+- Any kind of Javascript expressions can be used as props inside `{}` and the value would evaluated base on that
+
+- Statements such as `if` and `for` can not be used inside JSX tags and should be put in the surrounding code.
+
+### String Literals
+
+- String literals can be used without brackets
+- The value is HTML-unescaped
+
+### Props default to "true"
+
+- A prop without a value is considered as `true` 
+- It can be confused with ES6 object shorthand (`{foo} // -> {foo: foo}`), therefor it's not recommended.
+
+### Spread attributes
+
+- If `props` object is already available it can be passed as `{...props}` to the inner tag as a whole
+
+- Specific props can be extracted using object destructing:
+
+```
+const {specific, ...rest} = this.props;
+
+... return(
+  <tag {...rest} />
+)
+```
+- Unnecessary props may be passed using this 
+- Invalid HTML attributes may be passed to the DOM
