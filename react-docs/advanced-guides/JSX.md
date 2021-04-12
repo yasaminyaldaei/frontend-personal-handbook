@@ -81,3 +81,30 @@ const {specific, ...rest} = this.props;
 ```
 - Unnecessary props may be passed using this 
 - Invalid HTML attributes may be passed to the DOM
+
+## Children in JSX
+
+- The content between the opening and closing tags are passed as a special prop called `children`
+
+### String Literals
+- Strings can be passed as children
+- The `props.children` will be that string
+- HTML is unescaped
+- Whitespaces, blank lines and new lines are removed by JSX. Thus these are the same:
+  ```
+  <div>Hello World</div>
+
+<div>
+  Hello World
+</div>
+
+<div>
+  Hello
+  World
+</div>
+
+<div>
+
+  Hello World
+</div>
+```
