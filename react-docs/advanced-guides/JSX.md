@@ -108,3 +108,33 @@ const {specific, ...rest} = this.props;
   Hello World
 </div>
 ```
+
+### Components and tags
+- Other components can be used as children between opening and closing tags
+- Different types of children (string literals, tags, components, etc) can be mixed together like in HTML
+- **A React component can return an array of elements**:
+```
+return [
+    // Don't forget the keys :)
+    <li key="A">First item</li>,
+    <li key="B">Second item</li>,
+    <li key="C">Third item</li>,
+  ];
+```
+
+### Expressions
+- Any JavaScript expression can be passed as JSX children, enclosed in `{}`
+  - Mainly useful for rendering a list of elements:
+  ```
+  return (
+    <>
+    {array.map(item => <Item item={item}/>)}
+    </>
+  )
+```
+- Expressions can be mixed with other types of children as well.
+  - String templates alternative
+
+### Functions
+
+
