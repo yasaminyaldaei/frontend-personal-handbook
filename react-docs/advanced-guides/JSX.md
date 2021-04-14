@@ -125,7 +125,7 @@ return [
 ### Expressions
 - Any JavaScript expression can be passed as JSX children, enclosed in `{}`
   - Mainly useful for rendering a list of elements:
-  ```
+```
   return (
     <>
     {array.map(item => <Item item={item}/>)}
@@ -137,4 +137,8 @@ return [
 
 ### Functions
 
+- Expressions inside JSX usually evaluate into strings and/or React elements.
+- But they can also be functions or any other kind of output in the case of custom components.
+  - This callback function can be called inside the component as `props.children(args)`
+- This approach will work as long as they will eventually change into sth React understands inside that component.
 
