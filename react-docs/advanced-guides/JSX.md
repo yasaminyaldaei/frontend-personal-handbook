@@ -142,3 +142,42 @@ return [
   - This callback function can be called inside the component as `props.children(args)`
 - This approach will work as long as they will eventually change into sth React understands inside that component.
 
+### Booleans, null, and undefined are all ignored
+
+- These values are valid JSX children
+- But They won't render anything
+
+```
+<div />
+
+<div></div>
+
+<div>{false}</div>
+
+<div>{null}</div>
+
+<div>{undefined}</div>
+
+<div>{true}</div>
+```
+
+- This functionality is useful for **conditional rendering**
+
+```
+  {showSth && <Some Component>}
+```
+
+- **Be aware of falsy values which aren't any of listed above**
+  - Because `0 && anything` will be evaluated into 0 in JS, since 0 is falsy
+    > When the value to `&&` operator's left is something that converts to false, it returns that value, and otherwise it returns the value on its right.
+    _Eloquent JS_
+  - To solve this we should make sure that the left side is always a Boolean
+    - Or just abandon this method and use ternaries! ([read more](https://kentcdodds.com/blog/use-ternaries-rather-than-and-and-in-jsx))
+
+- If we need to display one of the above values, we need to convert it to string (`String(variable)`)
+
+
+  
+
+
+
