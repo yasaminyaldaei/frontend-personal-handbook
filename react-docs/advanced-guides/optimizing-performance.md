@@ -10,3 +10,8 @@ But these are the essential techniques that need to be used:
 ### how-to
 - CRA: `npm run build`
 - Single-file builds: `.production.min.js` cdn files
+
+## Use React Profiler
+
+- `react-dom` 16.5+ provides enhanced profiling capabilities in DEV mode using the DevTools profiler plugin.
+- This plugin uses React’s experimental Profiler API to collect timing information about each component that’s rendered in order to identify performance bottlenecks in React applications. 
