@@ -32,23 +32,39 @@
         - It would cause error which is `TDZ`
             - Temporal dead zone
 
-- `NaN`
-    - Invalid number rather than "not a number"
-    - `NaN` === `NaN` : `false`
-    - `isNaN("string")` => `true`
-        - because of coercion
-    - `Number.isNaN("string")` : `false`
-    - `typeof NaN` => "number"
+- `===` lies in two cases!
 
-- Negative Zero
-    ```js
-        var trendRate = -0;
-        trendRate.toString() // "0"
-        trendRate === 0 // true
-        trendRate > 0 // false
-        trendRate < 0 // false
-    ```
-    - `Object.is(variable, -0)` is the right way to check
-    - `Math.sign()` returns "0" and "-0" instead of usual "1" and "-1" return value
+    - `NaN`
+        - Invalid number rather than "not a number"
+        - `NaN` === `NaN` : `false`
+        - `isNaN("string")` => `true`
+            - because of coercion
+        - `Number.isNaN("string")` : `false`
+        - `typeof NaN` => "number"
+        - isNan polyfill
+        ```js
+        function isNan(v) {
+            return v != v;
+        }
+        ```
+
+    - Negative Zero
+        ```js
+            var trendRate = -0;
+            trendRate.toString() // "0"
+            trendRate === 0 // true
+            trendRate > 0 // false
+            trendRate < 0 // false
+        ```
+        - `Object.is(variable, -0)` is the right way to check
+        - `Math.sign()` returns "0" and "-0" instead of usual "1" and "-1" return value
+        - isNegativeZero polyfill
+        ```js
+        function isNegZero(v) {
+            return v == 0 && (1 / v) == -Infinity
+        }
+        ```
+- `String()`, `Boolean()`, `Number()` are not supposed to be used with `new` 
+    - The output already exists as a type and these utilities are great to output the value directly
 
     
