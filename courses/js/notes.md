@@ -67,4 +67,39 @@
 - `String()`, `Boolean()`, `Number()` are not supposed to be used with `new` 
     - The output already exists as a type and these utilities are great to output the value directly
 
+- `ToNumber()` and `ToString()` are abstract operations done internally to achieve `ToPrimitive()`, alognside `ToBoolean`
+    - These are procedures used in different methods (explicitly or implicitly), not methods themselves
+    - These can happen while coercion
+    - `ToString(-0)` => 0
+    - `ToString(object)` => **`[object object]`**
+    - `ToNumber("")` => 0
+        - Root of all coercion evil!
+        - Empty string with white spaces is still 0 because in the process the leading and trailing white spaces are eliminated first
+    - `ToNumber(-0)` => -0
+    - `ToNumber(null)` => 0
+    - `ToNumber(undefined)` => `Nan`
+    - `ToBoolean` only checks the falsy values and decided if the value is in there or not
+        - `ToBoolean(true)` => 1
+            - Bad idea!
+                ```js
+                3 > 2 > 1 // => false
+                // (3 > 2) > 1 
+                // (3 > 2) => true
+                // true > 1 => 1 > 1 => false
+                
+
+- `Boolean(object)`
+    `Boolean(null)` => false
+    `Boolean(undefined)` => false
+    `Boolean({})` => true
+    - Useful kind of implicit coercion and condition
+        - `if (myObject) { // Do sth}`
+
+- A string (or any primitive type) has access to object prototype methods
+    - This is a form of implicit coercion
+    - This is called **Boxing**
+
+
+
+
     
