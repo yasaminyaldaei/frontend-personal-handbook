@@ -47,3 +47,15 @@ But these are the essential techniques that need to be used:
   - Including the `render()` method on this component and below.
 - The same effect can be achieved using the `React.PureComponent`
   - It is equivalent to implementing `shouldComponentUpdate()` with a shallow comparison of current and previous props and state.
+
+## Should Component Update in action
+- Different scenarios may happen while updating:
+  - React starts check top to bottom.
+  - It finds out that `shouldComponentUpdate` is true for root.
+  - It starts to go deeper.
+  - If `SCU` is false for a subtree, it decides that subtree doesn't need reconciliation and moves on.
+  - If `SCU` is true, then "is virtual DOM elements are equal" check starts.
+  - Also the children of the subtree are also checked for the `SCU` and `vDOMEq`.
+  - If both are true, that node and all the parents need reconciliation.
+  - If `SCU` is true but `vDOMEq` is not, React doesn't change the DOM and only updates the component state. (thus no reconciliation is needed).
+    - **Reconciliation only happens when `shouldComponentUpdate` is true and virtual DOM elements are not equal to the previous ones.**
