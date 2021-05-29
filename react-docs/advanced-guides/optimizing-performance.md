@@ -59,3 +59,19 @@ But these are the essential techniques that need to be used:
   - If both are true, that node and all the parents need reconciliation.
   - If `SCU` is true but `vDOMEq` is not, React doesn't change the DOM and only updates the component state. (thus no reconciliation is needed).
     - **Reconciliation only happens when `shouldComponentUpdate` is true and virtual DOM elements are not equal to the previous ones.**
+
+### `shouldComponentUpdate` examples
+- The manual way would be checking the `props` and `state` values one by one:
+```js
+shouldComponentUpdate(nextProps, nextState) {
+  if (nextProps.someProp !== this.props.someProp) {
+    return true;
+  }
+  if (nextState.someState !== this.state.someState) {
+    return true;
+  }
+
+  return false;
+}
+```
+- To achieve the same effect using a built-in feature, we can use `React.PureComponent`
