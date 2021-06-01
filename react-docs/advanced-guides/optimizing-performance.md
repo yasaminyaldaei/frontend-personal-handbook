@@ -61,7 +61,7 @@ But these are the essential techniques that need to be used:
     - **Reconciliation only happens when `shouldComponentUpdate` is true and virtual DOM elements are not equal to the previous ones.**
 
 ### `shouldComponentUpdate` examples
-- The manual way would be checking the `props` and `state` values one by one:
+- The manual way would be "shallow comparison" of the `props` and `state` values one by one:
 ```js
 shouldComponentUpdate(nextProps, nextState) {
   if (nextProps.someProp !== this.props.someProp) {
@@ -75,3 +75,39 @@ shouldComponentUpdate(nextProps, nextState) {
 }
 ```
 - To achieve the same effect using a built-in feature, we can use `React.PureComponent`
+  - If the data is being mutated, the shallow comparison done here may miss the changes.
+    - Example:
+    ```js
+    // A pure component
+    state: {
+      myArray: []
+    }
+    ...
+    handler() {
+      this.state.myArray.push("new item")
+      this.setState({ myArray })
+    }
+    ```
+      - This won't cause rerender
+    - To solve this we need to return new instances:
+    ```js
+    this.setState(state => ({
+      array: state.array.concat("new-item")
+    }))
+    //or
+    this.setState(state => ({
+      array: [...state.array, "new-item"]
+    }))
+    ```
+    - The same principle applies to objects as well.
+      - This won't work:
+      ```js
+      myObject.property = "new-value"
+      ```
+      - To solve:
+      ```js
+      Object.assign({}, myObject, {property: "new-value"})
+      // or
+      myObject = {...state.myObject, property: "new-value"}
+      ```
+      - To do this for deeply nested objects in a clean manner, libraries like `immer` and `immutability-helper` can be used.
