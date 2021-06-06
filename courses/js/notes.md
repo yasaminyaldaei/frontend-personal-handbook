@@ -135,6 +135,26 @@
         - when either side is non-primitive
         - when either side is `true` or `false`
     - `==` is great for coercion-based comparison between primitive values.
+    - `==` is for comparisons with known types.
+        - Optionally for cases when coercion is helpful.
+    - When the types differ, using `===` is pointless since it would always be `false`.
+        - We can say that when the types are equal `===` is unnecessary as well.
+    - One `==` is faster and more efficient than two or more `===` when **we know the types** and the types are different.
+        - The single `==` is more preferrable.
+        - The two or more `===` is distracting and harder to read.
+    - When we don't know the types
+        - Shows not understanding the code.
+        - Refactor is preferable
+        - Here `===` can be a signal of uncertainty when uncertainty is unavoidable.
+            - It makes it obvious to the reader that the types are uncertain.
+            - `===` should be reserved for these kind of cases.
+        - Not knowing the types is equivalent to assume that coercion will happen (the worst case).
+            - Here again `===` is a safe option.
+        - We need to use the `===` when we don't want or can't use known and obvious types.
+    - Making types known and obvious leads to better code.
+        - In this case `==` is the best.
+        - Otherwise, `===` is the fallback.
+    
 
 
 
