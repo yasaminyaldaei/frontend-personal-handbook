@@ -99,6 +99,44 @@
     - This is a form of implicit coercion
     - This is called **Boxing**
 
+- Both `==` and `===` check the type
+    - **When the types match `==` does the `===` operation.**
+    - When the types mismatch, `===` always returns `false`.
+    - spec explitly says that `===` returns `false` for `NaN` and `true` for `-0` and `+0` comparison.
+    - `==` allows coercion when types differ but `===` doesn't.
+        - We should decide whether we want coercion or not.
+        - When we choose `===` all the time, it shows that we're not certain about our code and result.
+    - **`null == undefined //true`**
+    - `null === undefined //false`
+        - In this case `==` is more convenient.
+        - `===` would require lots of strict checks for no proper benefit.
+    - **`==` prefers `ToNumber`**
+        - If we have two inputs, either number or string, and we're sure one of them is absolutely number, `==` is more convenient.
+            - `===` would require `Number` to check.
+            - If one both of them strings, they should be absolutely the same.
+    - **`==` tries `ToPrimitive` and if doesn't work, it would be `false`.**
+        - `ToPrimitive` on array stringifies it.
+            - When array has one element, coercion is bad.
+                - `42 == [42] //true`
+                    - The answer is not `===`, but it is better structuring and sensible comparison.
+    - `[] == ![] //true`
+        - Corner case
+        - Not sensible comparison
+        - **`[]` is truthy** => `![]` would become `false`
+        - `[] == false` => Non-primitive comparions => Toprimitive.
+            - `"" == false`. => Number preference.
+                - `0 == false`
+                - `0 == 0` => `true`
+    - `[]` is truthy but `[] == false` 
+        - The coercion corner cases makes this.
+            - **[] => Non-primitive => ToPrimitive => Stringify => "" => 0 => 0 is falsy**
+    - When to avoid `==`
+        - when either side might be 0 or ""
+        - when either side is non-primitive
+        - when either side is `true` or `false`
+    - `==` is great for coercion-based comparison between primitive values.
+
+
 
 
 
