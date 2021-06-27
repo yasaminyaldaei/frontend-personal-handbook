@@ -156,6 +156,25 @@
         - Otherwise, `===` is the fallback.
     
 
+- TypeScript & Flow
+    - Pros
+        - They make the types more obvious
+        - Communicates _intent_
+        - Popular and well-documented
+        - Sophisticated and good at what they do
+    - Cons
+        - Non-JS-standard
+            - External standard
+            - Ecosystem locking
+                - We're locked into a non-standard ecosystem
+        - Requires a build process
+            - Complexity and pipeline
+            - Barrier to entry
+        - Intimidating for those without prior formal types experience
+        - They focus on static types rather than _value types_
+            - JS is not meant to have static containers (variables, etc)
+        
+
 
 
 
