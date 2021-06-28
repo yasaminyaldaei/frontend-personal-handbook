@@ -25,3 +25,48 @@ return ReactDOM.createPortal(this.props.children, domNode)
 - Accessibility concerns
     - Managing keyboard focus in modals.
     - Following ARIA modal authoring practices.
+
+## Event Bubbling Through Portals
+- A portal still behaves like any other React child.
+    - As the portal still exists in the React tree regardless of position in DOM tree
+- Including Event Bubbling
+    - _An event fired in a portal will be propagated to its ancestor components in React tree_
+        - Even if those ancestors, are not parents in DOM tree
+
+```html
+<div>
+    <div id="root"></div>
+    <div id="modal"></div>
+</div>
+```
+```js
+class Parent extends React.Component {
+    state = { count: 0}
+    handleClick = () => {
+        this.setState(({ count}) => ({
+            count: count + 1
+        }))
+    }
+
+    render() {
+        return (
+            <div onClick={this.handleClick}>
+                <p>{this.state.count}</p>
+                // A standard modal with `createPortal` and appended to the "modal" div of the DOM
+                <Modal>
+                    // A child with a button without click handler
+                    <Child />
+                </Modal>
+            </div>
+        )
+    }
+}
+```
+
+- `Child` is not a dom node in `root` DOM tree.
+    - Also the button inside `Child` is not child of the `div` with the click handler.
+- The child doesn't have click handler
+    - The event bubbles up to the `Parent` component thus.
+    - The state of `Parent` will change
+- This procedure makes the state management more flexible
+    - The React (not DOM) parent of the modal children will capture the events regardless of the modal (or similar component) implementation
