@@ -174,7 +174,25 @@
         - They focus on static types rather than _value types_
             - JS is not meant to have static containers (variables, etc)
         
-
+- Scope
+    - JS is not interpreted line by line and some sort of compiling is done
+        - JS is a lexically scoped language
+        - There's a communication between the execution engine and the scope manager when a variable is being assigned to a value.
+            - When the variable is in target position
+            - Executing of a function, puts that function in the source position
+                - The scope manager provides the officially declared function in the compilation phase
+                    - **If there isn't any `type error: undefined is not a function` will occur**
+                    - The identifier might not be in the current scope, but available in the global scope
+                        - Like `console`
+            - These are the look up process
+                - The engine asks for identifiers and the scope manager provides the looked up identifiers in the bottom to the top manner
+            - Compilation is a plan or roadmap for execution
+                - Stuff don't exist yet in the compiler phase
+                - The compiler output is not reserved in memory
+                - We discover information but we use it in run time
+                - With each execution the plan will be regenerated
+            
+    - JS organizes scopes with functions and blocks
 
 
 
