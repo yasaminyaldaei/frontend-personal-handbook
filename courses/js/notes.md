@@ -193,6 +193,29 @@
                 - With each execution the plan will be regenerated
             
     - JS organizes scopes with functions and blocks
+    - When a global scope variable is a target reference inside a function scope, it gets updated not shadowed (shadowing meaning re-assigned)
+    - When a non formally declared variable inside a scope is created (target reference), it will be auto declared by global scope.
+        - So the variables should always be formally declared
+        - Or strict mode should be used
+            - **This makes the above scenario a "reference error"**
+        - When an undeclared source reference is called in program, it always throws `ReferenceError`
+    - A parameter formally creates a identifier inside the function scope
+        - The assignments happens on the function call before the function executes.
+    - undefines vs undeclared
+        - A variable is there but doesn't have value at the time: undefined
+        - There isn't any formally declared reference: undeclared
+    - When a function declaration gets assigned to a variable, it doesn't get attached to the global scope
+        - This is called function expression
+        - Calling the function expression independently will throw `ReferenceError`
+        - Anonymous function expression vs named function expression
+            - The latter is more preferred.
+                - Name produces a reliable self-reference (recursion, etc)
+                - More debuggable stack traces
+                - More self-documenting code
+            - 
+
+    
+    
 
 
 
