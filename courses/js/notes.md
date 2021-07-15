@@ -212,7 +212,77 @@
                 - Name produces a reliable self-reference (recursion, etc)
                 - More debuggable stack traces
                 - More self-documenting code
-            - 
+    - Lexical scope
+        - JS is lexically scoped
+        - Dynamic scope
+            - Bash script is an example
+            - In dynamic scope it matters when a function is called
+                - The variables inside the function will be looked up around the nearest scope
+    - Function scoping
+        - The minimum amount of variables should be exposed
+            - Everything should be private by default
+            - This decreases the name collisions
+            - Also it makes it easier to refactor later
+                    - Since it's not exposed to be used directly by others
+    - IIFE pattern
+        - Used to create a temporary scope and throw it away after being finished
+        - Some special use case:
+            ```js
+                var teacher = (function getTeacher(teacher) {
+                    try {
+                        return fetchTeacher(1)
+                    }
+                    catch {
+                        return "Fallback"
+                    }
+                })()
+            ```
+    - Block scoping
+        - Using `let` and `const` with `{}` makes an implicit block scope
+            - Unlike `var` that attaches itself to the function scope
+            - Also `var` can be used more than once inside of a scope for the same variable name
+        - For semantic and behavior reasons, `let` and `var` should exist together
+    - `const`
+        - `const` allows mutating a constant array item!
+        - It should be used with immutable primitive values
+        - `Object.freeze` can be used with objects and arrays to achieve some kind of immutability
+    - Hoisting
+        - A convention to describe the parsing
+            - The compile step
+        - It's not an actual JS spec thing
+        - `var` hoisting is usually not useful and good
+            ```js
+                teacher = "sth"
+                var teacher;
+            ```
+        - On the other hand function hoisting can be useful in semantic ways
+            ```js
+                // use at top:
+                getSth()
+                ...
+                // declare at the bottom:
+                function getSth() {
+                    //Get sth
+                }
+            ```
+        - `let` hoists as well
+            - `let` doesn't get initialized so the `TDZ` error is caught
+                ```js
+                    {
+                        teacher = "Kyle"
+                        let teacher;
+                    }
+                ```
+                - `var` initializes to `undefined` when it's declared
+                - `TDZ` is invented for `const`
+                    - `const` cannot be initialized to `undefined` at the compile time and then assigned to its eventual value at the run time
+                    - But even though `TDZ` is used for `let` as well
+                - _The variables are created when their containing Lexical Environment is instantiated...When the `LexicalBinding` is evaluated not when the variable is created_
+                    - _13.3.1 Let and Const declarations_
+
+
+        
+        
 
     
     
