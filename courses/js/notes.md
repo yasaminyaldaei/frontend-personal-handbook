@@ -346,4 +346,33 @@
     - ES6 modules
         - Everything that is exported is public, otherwise private
         - With `.mjs`
-        
+
+- Objects
+    - `this`
+        - references the execution context for that call
+        - determined by **how the function gets invoked**
+        - JS way of dynamic scope
+    - Ways to invoke 
+        1. implicit binding
+            - sth.function
+                - Here `this` is connected to the `sth` context
+        2. Explicit binding
+            - `.call` and `.apply` 
+            - These take the context as their first argument
+            - hard binding
+                `setTimeout(sth.function, 10, "Lost!")`
+                - should add `.bind(sth)` to preserve the context
+                    - Overusing `bind` takes away the flexibility benefits of the `this` and dynamic binding
+                        - Predictable lexical scope is the better solution for this case (module)
+        3. `new`
+            - Invoke a function with `this` pointing to a new empty object
+                - Or a particular object
+                - Or being forced with `bind`
+                - Links this object to another object
+            - Equivalent of `function.call({})`
+            - If function does not return an object, assume return of `this`
+        4. default binding
+            - The fallback is to consider `this` as the global scope
+            - In "use strict" it returns `undefined` (`TypeError`)
+                - A this-aware function without `this` being defined is not right
+
